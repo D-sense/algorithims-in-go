@@ -16,10 +16,34 @@
 
 package main
 
-func main(){
+import (
+	"fmt"
+	"math"
+)
 
+func main(){
+	pyramid(3)
 }
 
-func pyramid(str string) string {
+func pyramid(n float64) {
+	colLength := 2*n-1
+    midpoint := math.Floor(colLength/2)
 
+    for row := .0; row < n; row++{
+		var level string
+
+		for column := .0; column < colLength; column++{
+           if midpoint - row <= column && midpoint + row >= column{
+           	level += "#"
+		   }else {
+		   	level += " "
+		   }
+		}
+
+		fmt.Println(level)
+	}
+}
+
+func pyramidWithRecursion(){
+	// TODO
 }

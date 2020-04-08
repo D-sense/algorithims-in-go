@@ -10,10 +10,61 @@
 
 package main
 
+import (
+	"fmt"
+	"log"
+	"time"
+)
+
 func main(){
+	defer timeTrack(time.Now(), "FIBONACCI")
+
+	fib := memoize(slowFib)
+	fmt.Println(fib(30))
 
 }
 
-func fib(str string) string {
 
+// using recursion
+func slowFib(n int) int {
+  if n < 2 {
+  	return n
+  }
+
+  return slowFib(n-1) + slowFib(n-2)
 }
+
+type funcFib func(int) int
+
+func memoize(fn funcFib) func(int) int {
+	cache := make(map[int]int, 0)
+
+	return func (n int) int {
+		if _, ok := cache[n]; ok {
+			return cache[n]
+		}
+
+		result := fn(n)
+		cache['n'] = result
+
+		return result
+	}
+}
+
+func timeTrack(start time.Time, name string) {
+	elapsed := time.Since(start)
+	log.Printf("%s took %s", name, elapsed)
+}
+
+//using loop
+//func fib(n int) int64 {
+//	fibBox := []int{0, 1}
+//
+//  for  i := 0; i < n; i++ {
+//	   v := fibBox[i] + fibBox[i+1]
+//	   fibBox = append(fibBox, v)
+//  }
+//
+//  fmt.Println(fibBox) // printing this for illustration
+//  return int64(fibBox[n])
+//}
