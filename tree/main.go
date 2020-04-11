@@ -16,74 +16,103 @@ package main
 import "fmt"
 
 func main(){
- // var list ArrBox
- // list = []string{"111", "222","3","4","544","6","7333","8","911","10"}
- //// list = append(list, "1", "2","3","4","5","6","7","8","9","10")
- // fmt.Println(Filter(list, length))
 
-	var node Node
-	node.add("HAMMED")
-	node.add("ADESHINA")
-	node.add("HASSAN")
-	fmt.Println(node.children)
+	tree := &Tree{Data: 20}
+	tree.add(0)
+	tree.add(40)
+	tree.add(-15)
 
-	fmt.Println( node.remove("ADESHINA"))
-	fmt.Println(node.children)
+	tree.Children[0].add(12)
+	tree.Children[0].add(-2)
+	tree.Children[0].add(1)
+
+	tree.Children[2].add(-2)
+
+	fmt.Println("Breadth-First Traversal")
+	tree.traverseBF(NodePrint)
+	fmt.Println()
+
+	fmt.Println("Depth-First Traversal")
+	tree.traverseDF(NodePrint)
+	fmt.Println()
+
+	//tree.remove(4)
+	//tree.traverseBF(NodePrint)
 
 }
 
 
-
-type Node struct {
-	data string
-	children []Node
+type Tree struct {
+	Data int
+	Children []*Tree
 }
 
-func NewNode(data string) Node {
-	return Node{
-		data: data,
+func NewTree(data int) *Tree {
+	return &Tree{
+		Data: data,
 	}
 }
 
-func (n *Node) add(data string) []Node {
-	n.children = append(n.children, NewNode(data))
-	return n.children
+
+func (n *Tree) add(data int) {
+	if n.Children == nil {
+		n.Children =  append(n.Children, NewTree(data))
+		return
+	}
+	n.Children = append(n.Children, NewTree(data))
 }
 
-func (n *Node) remove(data string) []Node{
-	nArr := make([]Node, 0)
+//not perfect; currently removed the parent only (does not look through their children)
+func (n *Tree) remove(data int) {
+	n.Children = n.Filter(data)
+}
 
-	for _, v := range n.children{
-		if v.data != data {
-			nArr  = append(nArr, v)
+
+func NodePrint(node *Tree) {
+	fmt.Printf("%v \n", node.Data)
+}
+func (n *Tree) Filter(data int) []*Tree {
+	nArr := make([]*Tree, 0)
+
+	for _, v := range n.Children {
+		if data != v.Data  {
+			nArr = append(nArr, v)
 		}
-   }
-   n.children = nArr
+	}
 
-   return n.children
+	return nArr
 }
 
 
+func (n *Tree) traverseBF(f func(*Tree)) {
+	if n == nil{
+		return
+	}
 
-//func (n *Node) Filter(data []string, check modFunc) []string {
-//	nArr := make([]string, 0)
-//
-//	for _, v := range data {
-//		if !check(v) {
-//			nArr  = append(nArr, v)
-//		}
-//	}
-//
-//	return nArr
-//}
+	arr := []*Tree{n}
 
-//type ArrBox []string
-//
-//type modFunc func(s string) bool
-//
-//func length(n string)  bool {
-//	if len(n) >= 3 {
-//		return true
-//	}
-//	return false
-//}
+	for len(arr) > 0 {
+		node := arr[0]
+		arr = arr[1:]
+
+		arr = append(arr, node.Children...)
+		f(node)
+	}
+}
+
+
+func (n *Tree) traverseDF(f func(*Tree)) {
+	if n == nil{
+		return
+	}
+
+	arr := []*Tree{n}
+
+	for len(arr) > 0 {
+		node := arr[0]
+		arr = arr[1:]
+
+		arr = append(node.Children, arr...)
+		f(node)
+	}
+}
