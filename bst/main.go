@@ -20,12 +20,13 @@ import (
 )
 
 func main(){
+	// generating a tree from a file
 	nodes := load()
 	for _, node := range nodes {
 		printNode(&node)
 	}
 
-
+    // manually generating a tree
 	t := &Tree{}
 	t.insert(100).
 		insert(-20).
@@ -51,7 +52,7 @@ func main(){
 	fmt.Println(t.contains(3309))
 
 	//another searching
-   fmt.Println(t.root.exist(-33))
+    fmt.Println(t.root.exist(-33))
 }
 
 type Tree struct {
