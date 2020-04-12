@@ -53,7 +53,6 @@ func NewTree(data int) *Tree {
 	}
 }
 
-
 func (n *Tree) add(data int) {
 	if n.Children == nil {
 		n.Children =  append(n.Children, NewTree(data))
@@ -116,3 +115,5 @@ func (n *Tree) traverseDF(f func(*Tree)) {
 		f(node)
 	}
 }
+
+
