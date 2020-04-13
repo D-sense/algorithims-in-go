@@ -53,7 +53,7 @@ func main(){
 }
 
 
-// validates Binary Search Tree [NOT accurate yet and requires more work]
+// validates Binary Search Tree
 func validate(node *node.Node, min, max int) bool {
 	if max != 0 && node.Value > max {
 		return false
