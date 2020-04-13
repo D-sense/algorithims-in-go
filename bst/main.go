@@ -201,4 +201,3 @@ func load() []Node {
 }
 
 
-func validateBinarySearchTree() {}

@@ -99,7 +99,6 @@ func (n *Tree) traverseBF(f func(*Tree)) {
 	}
 }
 
-
 func (n *Tree) traverseDF(f func(*Tree)) {
 	if n == nil{
 		return
