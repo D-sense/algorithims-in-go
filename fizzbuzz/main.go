@@ -16,20 +16,20 @@ package main
 
 import "fmt"
 
-func main(){
+func main() {
 	fizzBuzz(100)
 }
 
 func fizzBuzz(num int) {
 
-	for n := 1; n <= num; n++{
-		if (n % 3) == 0 && (n % 5) == 0{
+	for n := 1; n <= num; n++ {
+		if (n%3) == 0 && (n%5) == 0 {
 			fmt.Println("fizzbuzz")
-		}else if (n % 3) == 0 {
+		} else if (n % 3) == 0 {
 			fmt.Println("fizz")
-		}else if (n % 5) == 0 {
+		} else if (n % 5) == 0 {
 			fmt.Println("buzz")
-		}else {
+		} else {
 			fmt.Println(n)
 		}
 

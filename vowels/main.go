@@ -7,7 +7,6 @@
 //   vowels('Why do you ask?') --> 4
 //   vowels('Why?') --> 0
 
-
 package main
 
 import (
@@ -15,7 +14,7 @@ import (
 	"regexp"
 )
 
-func main(){
+func main() {
 	fmt.Println(vowels("Hi There!"))
 	fmt.Println(vowels("Why do you ask?"))
 	fmt.Println(vowels("Why?"))
@@ -38,9 +37,27 @@ func main(){
 //	return counter
 //}
 
-// using Recursion
-func vowels(str string) int {
-    reg := regexp.MustCompile("[aeiou]")
-	return len(reg.FindAllString(str, -1))
+func vowels2(str string) int {
+	vo := map[string]string{
+		"a": "a",
+		"e": "e",
+		"i": "i",
+		"o": "o",
+		"u": "u",
+	}
+
+	counter := 0
+	for _, v := range str {
+		if vo[string(v)] == string(v) {
+			counter++
+		}
+	}
+
+	return counter
 }
 
+// using Recursion
+func vowels(str string) int {
+	reg := regexp.MustCompile("[aeiou]")
+	return len(reg.FindAllString(str, -1))
+}
